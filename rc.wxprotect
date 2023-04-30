@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+
+# License: BSD-2 Clause
+#
+# Copyright 2023, Rafael Grether (devnull@apt322.org)
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions
+# are met:
+#
+# 1. Redistributions of source code must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+# 2. Redistributions in binary form must reproduce the above copyright
+#    notice, this list of conditions and the following disclaimer in the
+#    documentation and/or other materials provided with the distribution.
+
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+# HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED
+# TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+# PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+# LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+# NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+# SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#
+# Last Modified Date: 2023-04-30
+#
+# Description: Enable W^X page protection
+#
+# Detailed Information:
+#
+# Write XOR Execute (W^X) page protection is a security feature that 
+# prevents code injection attacks by enforcing a strict separation 
+# between writable and executable memory pages. This way, memory pages
+# can be marked as either writable or executable, but not both.
+#
+# In a system without W^X protection, an attacker can exploit a 
+# buffer overflow vulnerability in a program to write malicious code 
+# into a writable memory page and then execute that code by jumping 
+# to its address. This is possible because the attacker can write 
+# to the same memory page that is also marked as executable.
+#
+# With this option, if an attacker tries to inject code into a 
+# writable memory page, the system will not allow that code 
+# to be executed.
+#
+# The "vm.mmap_min_addr" variable sets the minimum 
+# virtual address (4096) that can be allocated using mmap, 
+# which helps to prevent attackers from exploiting 
+# NULL pointer dereference.
+
+sysctl -w vm.mmap_min_addr=4096
