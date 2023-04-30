@@ -26,15 +26,22 @@
 # NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-# Last Modified Date: 2023-04-29
+# Last Modified Date: 2023-04-30
 #
 # Description: Hide PID from other unprivileged users
 #
 # Detailed Information:
 #  The "proc" filesystem provides a way for processes to access information
 #  about the system, such as system statistics and configuration information.
-#  The "hidepid" option, when set to 2, will hide process information for all
-#  users except the owner of the process and users with root privileges.
+#  The "hidepid" option, when set to 2 (most restrictive setting), will hide
+#  process information for all users except the owner of the process and
+#  users with root privileges.
+#
+#  All possible values that can be set:
+#  hidepid=0: This is the default behavior
+#  hidepid=1: This value hides information about processes that are not owned by the current user. Only the process owner and root can see information about a process.
+#  hidepid=2: This value hides information about all processes except for those owned by the current user and their children.
+#  hidepid=3: This value hides information about all processes except for those owned by the current user, their children, and their children's children.
 #
 #  By default, all GNU/Linux systems expose process information to all users,
 #  but it can be a security risk (data leak).
