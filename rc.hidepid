@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+
+# License: BSD-2 Clause
+#
+# Copyright 2023, Rafael Grether (devnull@apt322.org)
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions
+# are met:
+#
+# 1. Redistributions of source code must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+# 2. Redistributions in binary form must reproduce the above copyright
+#    notice, this list of conditions and the following disclaimer in the
+#    documentation and/or other materials provided with the distribution.
+
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+# HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED
+# TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+# PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+# LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+# NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+# SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#
+# Last Modified Date: 2023-04-29
+#
+# Description: Hide PID from other unprivileged users
+#
+# Detailed Information:
+#  The "proc" filesystem provides a way for processes to access information
+#  about the system, such as system statistics and configuration information.
+#  The "hidepid" option, when set to 2, will hide process information for all
+#  users except the owner of the process and users with root privileges.
+#
+#  By default, all GNU/Linux systems expose process information to all users,
+#  but it can be a security risk (data leak).
+#
+#  So, this can prevent non-privileged users from seeing information about
+#  other users processes, which can be useful in multi-user environments
+#  or in situations where sensitive information is being processed.
+
+#  But there are potential drawbacks activating this:
+#  - Compatibility: Some applications, scripts and debugging tools may rely 
+#                   on being able to access process information.
+#                   Hiding process information could break these applications.
+#  - Monitoring:    Process information is often used for system monitoring 
+#                   and resource management. Hiding process information can 
+#                   make it more difficult to monitor system performance and 
+#                   resource usage.
+
+mount -o remount,hidepid=2 /proc
+
