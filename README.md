@@ -1,4 +1,4 @@
 # rc.poison.d
-Services of poison
+Specific services & system control from Poison Linux
 
-Local: /etc/rc.d/rc.poison.d/
+Path: /etc/rc.d/rc.poison.d/
