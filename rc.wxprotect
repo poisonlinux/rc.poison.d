@@ -51,5 +51,19 @@
 # virtual address (4096) that can be allocated using mmap, 
 # which helps to prevent attackers from exploiting 
 # NULL pointer dereference.
+#
+# But there are potential drawbacks activating this:
+# - Performance:   Allowing more user-space mappings at lower addresses 
+#                  can cause memory fragmentation, which can reduce system 
+#                  performance. But in general, the impact on performance is 
+#                  likely to be small.
+# - Compatibility: Some applications or libraries may not work properly with
+#                  lower vm.mmap_min_addr value, as they may assume that 
+#                  certain memory regions are reserved and not available for 
+#                  user-space mappings.
+# - Debugging:     In some cases, lowering vm.mmap_min_addr can make it harder 
+#                  to debug certain types of errors or crashes that occur in 
+#                  user-space applications, as the memory mappings may be located 
+#                  in different regions of memory than expected.
 
 sysctl -w vm.mmap_min_addr=4096
