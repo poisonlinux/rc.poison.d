@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+
+# License: BSD-2 Clause
+#
+# Copyright 2023, Rafael Grether (devnull@apt322.org)
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions
+# are met:
+#
+# 1. Redistributions of source code must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+# 2. Redistributions in binary form must reproduce the above copyright
+#    notice, this list of conditions and the following disclaimer in the
+#    documentation and/or other materials provided with the distribution.
+
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+# HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED
+# TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+# PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+# LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+# NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+# SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#
+# Last Modified Date: 2023-04-30
+#
+# Description: Enable ASLR protection
+#
+# Detailed Information:
+#
+# ASLR is a security technique that makes it harder for attackers 
+# to exploit vulnerabilities in user-space applications by randomly
+# changing the location of key data structures and code in memory.
+# This makes it more difficult for attackers to predict the location
+# of critical memory regions (stack or heap).
+#
+# Enabling ASLR is generally recommended as a security measure. 
+# It can help to mitigate the impact of buffer overflow and other 
+# memory-related vulnerabilities.
+#
+# All possible values are:
+# 0 - Disables ASLR
+# 1 - Enables partial ASLR for shared libraries, but leaves
+#     the stack and heap at fixed addresses.
+# 2 - Enables full ASLR for all memory mappings, including the stack and heap.
+#
+# But there are potential drawbacks activating this:
+# 1 - Compatibility: Some applications may not function properly.
+#                    In some cases, enabling full ASLR may cause some applications
+#                    to fail unexpectedly. This can occur if the application 
+#                    depends on specific memory addresses that is disrupted by 
+#                    randomization. 
+# 2 - Performance:   ASLR involves some additional memory usage and CPU overhead
+#                    to perform the address randomization. 
+
+sysctl -w kernel.randomize_va_space=2
